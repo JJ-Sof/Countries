@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import CountryList from './components/CountryList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CountryDesc from './components/CountryDesc';
+import Chart from './components/Chart';
 import SearchBar from './components/SearchBar';
 import Filter from './components/Filter';
 import Statistics from './components/Statistics';
@@ -50,12 +53,18 @@ function App() {
 
 
   return (
+    <Router>
     <div>
       <SearchBar onSearch={setSearchTerm} />
       <Filter onRegionFilter={setRegionFilter} onLanguageFilter={setLanguageFilter} />
       <Statistics countries={filteredCountries} />
-      <CountryList countries={filteredCountries} />
+      <Chart countries={filteredCountries}/>
+      <Routes>
+        <Route path="/" element={<CountryList countries={filteredCountries} />} />
+        <Route path="/country/:countryName" element={<CountryDesc countries={countries} />} />
+      </Routes>
     </div>
+    </Router>
   );
 }
 
